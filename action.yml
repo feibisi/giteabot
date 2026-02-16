@@ -1,0 +1,43 @@
+name: giteabot
+description: Gitea/GitHub helper bot for backports and label-based automation.
+inputs:
+  token:
+    description: API token for GitHub or Gitea.
+    required: true
+  repo:
+    description: Target repo in owner/name format.
+    required: false
+  fork:
+    description: Fork repo for backport branches.
+    required: false
+  provider:
+    description: github or gitea.
+    required: false
+  api_base:
+    description: API base URL, e.g. https://api.github.com or https://gitea.com/api/v1.
+    required: false
+  mode:
+    description: event, maintenance, or server.
+    required: false
+  event_path:
+    description: Path to the event payload JSON.
+    required: false
+  event_name:
+    description: Event name string (pull_request, push, etc.).
+    required: false
+  webhook_secret:
+    description: Webhook secret for server mode.
+    required: false
+runs:
+  using: docker
+  image: Dockerfile
+  env:
+    GITEABOT_TOKEN: ${{ inputs.token }}
+    GITEABOT_REPO: ${{ inputs.repo }}
+    GITEABOT_FORK: ${{ inputs.fork }}
+    GITEABOT_PROVIDER: ${{ inputs.provider }}
+    GITEABOT_API_BASE: ${{ inputs.api_base }}
+    GITEABOT_MODE: ${{ inputs.mode }}
+    GITEABOT_EVENT_PATH: ${{ inputs.event_path }}
+    GITEABOT_EVENT_NAME: ${{ inputs.event_name }}
+    GITEABOT_WEBHOOK_SECRET: ${{ inputs.webhook_secret }}
